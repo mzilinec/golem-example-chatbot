@@ -1,0 +1,43 @@
+default:
+  states:
+  - name: root
+    action: keepbot.bots.default.actions.action_root_accept
+
+help:
+  states:
+  - name: root
+    action: keepbot.bots.default.actions.action_help_accept
+
+greeting:
+  states:
+  - name: root
+    action: keepbot.bots.default.actions.show_greeting
+
+about:
+  states:
+  - name: root
+    action: keepbot.bots.default.actions.show_about
+
+remind:
+  accepts:
+  - datetime
+  - date_interval
+  states:
+
+  - name: root
+    action: keepbot.bots.remind.actions.set_reminder
+    require:
+    - entity: datetime
+      action:
+        text: "When should I remind you?"
+        replies: ["In the evening", "Tomorrow 10am", "Next monday"]
+    - entity: reminder
+      action:
+        text: "What should I remind you about?"
+        replies: ["Wash the dishes", "Pay the bills", "Wake up"]
+
+  - name: cancel
+    action: keepbot.bots.remind.actions.on_cancel
+  - name: fire
+    action: keepbot.bots.remind.actions.send_reminder
+  - name: done
