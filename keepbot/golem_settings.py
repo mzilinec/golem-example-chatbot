@@ -2,7 +2,7 @@ from urllib.parse import urlparse
 
 import os
 
-redis_url = os.environ['REDIS_URL']
+redis_url = os.environ.get('REDIS_URL', "redis://localhost:6379/0")
 
 if redis_url:
     redis_url_parsed = urlparse(redis_url)

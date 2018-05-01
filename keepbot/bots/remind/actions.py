@@ -5,9 +5,9 @@ from keepbot.reminder import create_reminder, cancel_reminder, get_reminder
 
 
 def set_reminder(dialog):
-    dt = dialog.context.date_interval.last()[0]
+    dt = dialog.context.date_interval.latest_v()[0]
     dt_formatted = dt.strftime("%H:%M %y/%m/%d")
-    remind_text = dialog.context.reminder.last()
+    remind_text = dialog.context.reminder.latest_v()
     dialog.context.clear(["datetime", "reminder"])
     msg = TextMessage("Cool! I will remind you to {} @ {} :)".format(remind_text, dt_formatted))
     reminder_id = create_reminder(dialog.uid, remind_text, dt)
@@ -17,7 +17,7 @@ def set_reminder(dialog):
 
 
 def on_cancel(dialog):
-    reminder_id = dialog.context.reminder_id.get()
+    reminder_id = dialog.context.reminder_id.current_v()
     if cancel_reminder(dialog.uid, reminder_id):
         dialog.send_response("Reminder cancelled!", 'default.root', run_next=False)
     else:
@@ -25,7 +25,7 @@ def on_cancel(dialog):
 
 
 def send_reminder(dialog):
-    reminder_id = dialog.context.reminder_id.last()
+    reminder_id = dialog.context.reminder_id.current_v()
     reminder = get_reminder(dialog.uid, reminder_id)
     text = "Reminder: {}".format(reminder.text)
     msg = TextMessage(text)

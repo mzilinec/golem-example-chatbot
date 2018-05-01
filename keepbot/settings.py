@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'your secret key :)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", False)
+DEBUG = os.environ.get("DEBUG", True)
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
@@ -129,5 +129,5 @@ USE_TZ = True
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
-STATIC_URL = os.environ.get("STATIC_URL")
+STATIC_URL = os.environ.get("STATIC_URL", "localhost:8000/")
 FORCE_SCRIPT_NAME = os.environ.get('URL_PREFIX')
