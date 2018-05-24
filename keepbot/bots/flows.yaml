@@ -28,10 +28,18 @@ remind:
     action: keepbot.bots.remind.actions.set_reminder
     require:
     - entity: datetime
+      filter:
+        - or:
+          - set-with: intent, remind
+          - include-flow: "remind.*"
       action:
         text: "When should I remind you?"
         replies: ["In the evening", "Tomorrow 10am", "Next monday"]
     - entity: reminder
+      filter:
+        - or:
+          - set-with: intent, remind
+          - include-flow: "remind.*"
       action:
         text: "What should I remind you about?"
         replies: ["Wash the dishes", "Pay the bills", "Wake up"]
